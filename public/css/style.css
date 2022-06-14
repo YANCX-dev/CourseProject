@@ -1,0 +1,216 @@
+:root {
+    --main-bg-color: #ffffff;
+    --main-el-color: #333333;
+}
+
+.admin-el-color {
+    background-color: #86A3C1;
+}
+
+body {
+    background: var(--main-bg-color);
+}
+
+.white-el-color {
+    background-color: #f3f0f0;
+}
+
+a {
+    color: black;
+}
+
+.font-color {
+    color: var(--main-el-color);
+}
+
+/*Текст*/
+
+.fc-black {
+    color: #000000;
+}
+
+.fc-white {
+    color: #ffffff;
+}
+
+
+/*Кнопка*/
+.bt-size {
+    height: 40px;
+}
+
+.border-color {
+    border: #ffffff 2px solid;
+}
+
+.news-info {
+    overflow: hidden;
+    height: 300px;
+
+}
+
+.news-title {
+    background-color: #333333;
+}
+
+.text-content {
+    text-overflow: ellipsis;
+}
+
+.max-width {
+    width: 1px;
+}
+
+.el-color {
+    background-color: var(--main-el-color);
+}
+
+.outline-none {
+    outline: none;
+}
+
+.error {
+    color: red;
+    /*font-weight: bold;*/
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.vh-50 {
+    height: 50vh;
+}
+
+.vh-80 {
+    height: 80vh;
+}
+
+.error-bg {
+    padding: 1px;
+    margin-top: 5px;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.back_to_top {
+    position: fixed;
+    bottom: 80px;
+    right: 40px;
+    z-index: 9999;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background: #f30000;
+    color: #444;
+    cursor: pointer;
+    border-radius: 2px;
+    display: none;
+}
+
+.back_to_top:hover {
+    background: #e9ebec;
+}
+
+.back_to_top-show {
+    display: block;
+}
+
+.ticket-bar-image {
+    background-image: url('/storage/kartinki-avtobusy-6.jpg');
+}
+.side-bar-el{
+    font-size: 20px;
+    color: #f3f0f0;
+}
+.side-bar-el:hover{
+    transition-delay: 100ms;
+    color: #333333;
+}
+.ticket-bar-border {
+    /*border: 12px solid rgba(225, 225, 225, 0.8);*/
+    background: rgba(255, 255, 255, 0.62);
+    border-radius: 6px;
+    padding: 25px;
+}
+
+.ticket-bar-input {
+    height: 100%;
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2d2d2d;
+    border-radius: 6px;
+    outline: none;
+}
+
+.ticket-bar-select {
+    height: 100%;
+    padding: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2d2d2d;
+    border-radius: 6px;
+    outline: none;
+}
+
+.ticket-bar-button {
+    outline: none;
+    border-radius: 6px;
+    height: 100%;
+    width: 100px;
+    padding: 6px;
+}
+
+.fs-20px {
+    font-size: 20px;
+}
+
+.page-link {
+    color: black;
+    font-size: 22px;
+    text-decoration: none;
+}
+
+.page-link:hover {
+    color: #020202;
+}
+/*Checkbox*/
+.checkbox__label{
+    padding: 2px;
+}
+.checkbox{
+ display: none;
+}
+.fake{
+    display: block;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    background-color: #f3f0f0;
+    border: 1px solid #333333;
+    position: relative;
+}
+.fake::before{
+    content: "";
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: block;
+    height: 15px;
+    width: 15px;
+    background-color: #0a53be;
+    opacity: 0;
+    transition: .2s;
+
+}
+.checkbox:checked + .fake::before{
+    opacity: 1;
+}
+.checkbox__text{
+
+}
+/*.table>tbody {*/
+/*    vertical-align: auto;*/
+/*}*/
