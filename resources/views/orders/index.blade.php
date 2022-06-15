@@ -108,7 +108,7 @@
         let bookButton = document.querySelector('#bookButton');
         const cruiseId = document.querySelector('#cruiseId');
         let cost = document.querySelector('#ticketPrice').innerHTML.valueOf();
-
+        let formCount = 1;
 
         async function getFreeCruisePlaces(id) {
             let response = await fetch(`/cruise-places/${id}`);
@@ -143,10 +143,8 @@
             const placesContainer = document.querySelectorAll("#placesContainer")
             let places = getFreeCruisePlaces(id);
             places.then(function (value) {
+                //Рендер мест
                 let places = Object.values(value);
-                placesContainer.forEach((item, index) => {
-
-                })
                 places.forEach((item) => {
                     placesContainer.forEach((container) => {
                         container.innerHTML += `
@@ -161,27 +159,26 @@
                     })
 
                 })
-                let cbArr = [];
+
+                let cbArr = []; //Выбранные чб
                 let spanFake = document.querySelectorAll('.fakeclass');
-                let cb = document.querySelectorAll('.checkbox');
+                const cb = document.querySelectorAll(".checkbox")
                 cb.forEach((item) => {
                     item.addEventListener('click', (e) => {
-                        // if (e.target.checked) {
-                        //     if (cbArr.length > 0) {
-                        //         createTemplate();
-                        //     }
-                        // }
                         if (cbArr.includes(item.value)) {
                             let index = cbArr.indexOf(item.value)
                             cbArr.splice(index, 1);
-                            // cbArr.includes(e.target.value) ? addPlaceTo(e.target.value) : deletePlace();
+                            console.log(cbArr)
+
                         } else {
                             cbArr.push(item.value)
-                            // addPlaceTo(cbArr);
+                            console.log(cbArr)
                         }
+
 
                     })
                 });
+
 
             })
 
@@ -258,7 +255,10 @@
     </div>`;
             let container = document.querySelector('.ticket-container');
             container.insertAdjacentHTML("beforeend", template);
+
             ticketPrice()
+            getTotalPrice()
+            checkboxControls()
         }
 
         function getAge(dateOfBirth) {
@@ -280,6 +280,8 @@
 
         function removeForm(target){
            target.closest('.ticketForm').remove();
+            getTotalPrice()
+            formCount--;
         }
 
 
@@ -324,9 +326,51 @@
         window.addEventListener('click', (e) => {
             if (e.target.classList.contains('ticketAdd')) {
                 e.preventDefault();
+                formCount++
+                console.log(formCount)
+                // let cb = document.querySelectorAll('.checkbox');
+                // let checkedCount = 0;
+                // cb.forEach((item) => {
+                //     item.addEventListener('click', (e) => {
+                //         item.checked ? checkedCount++ : checkedCount--
+                //     })
+                // })
                 createTemplate();
             }
+
         });
+
+        // window.addEventListener('click', (e) => {
+        //     if (e.target.classList.contains('fakeclass')) {
+        //         checkboxControls()
+        //     }
+        // });
+
+        // function checkboxControls(){
+        //     let cbArr = []; //Выбранные чб
+        //     console.log(cbArr)
+        //     const cb = document.querySelectorAll(".checkbox")
+        //     cb.forEach((item) => {
+        //         item.addEventListener('click', (e) => {
+        //             if (cbArr.includes(item.value)) {
+        //                 let index = cbArr.indexOf(item.value)
+        //                 cbArr.splice(index, 1);
+        //                 console.log(cbArr)
+        //
+        //             } else {
+        //                 cbArr.push(item.value)
+        //                 console.log(cbArr)
+        //             }
+        //             if(formCount === cbArr.length){
+        //                 cb.forEach((checkbox)=>{
+        //                     checkbox.setAttribute('disabled','disabled')
+        //                 })
+        //             }
+        //
+        //
+        //         })
+        //     });
+        // }
 
         bookButton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -341,11 +385,11 @@
             });
         });
 
-        window.addEventListener('click', (e) => {
-            e.target.addEventListener('click', (e) => {
-
-            })
-        });
+        // window.addEventListener('click', (e) => {
+        //     e.target.addEventListener('click', (e) => {
+        //
+        //     })
+        // });
 
         function getTotalPrice(){
             const ticketPrice = document.querySelectorAll('#ticketPrice');

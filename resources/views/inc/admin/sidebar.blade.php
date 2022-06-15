@@ -22,12 +22,6 @@
                                 <a href="{{route('user.info')}}" class="nav-link side-bar-el px-0"> <span class="d-none d-sm-inline">Информация о пассажирах</span> </a>
                             </li>
                             <li>
-                                <a href="{{ route('AddPage') }}" class="nav-link side-bar-el px-0"> <span class="d-none d-sm-inline">Добавление записей</span> </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('deletePage') }}" class="nav-link side-bar-el px-0"> <span class="d-none d-sm-inline">Удаление записей</span> </a>
-                            </li>
-                            <li>
                                 <a href="{{ route('createInfo') }}" class="nav-link side-bar-el px-0"> <span class="d-none d-sm-inline">Новости и информация для пассажиров</span> </a>
                             </li>
                         </ul>

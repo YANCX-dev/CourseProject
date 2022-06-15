@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("surname");
             $table->string("phone_number");
             $table->string("email");
+            $table->string("passport");
         });
     }
 
