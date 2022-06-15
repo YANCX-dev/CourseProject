@@ -211,6 +211,13 @@ a {
 .checkbox__text{
 
 }
+.navbar-toggler{
+    border: 3px solid #9c9c9c;
+}
+.navbar-toggler-icon{
+    background-color: #333333;
+    border-radius: 5px;
+}
 /*.table>tbody {*/
 /*    vertical-align: auto;*/
 /*}*/

@@ -68,21 +68,14 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                <span class="fs-4">Выберите место:</span>
-                                <div class="d-flex justify-content-evenly align-items-center flex-wrap"
-                                     id="placesContainer" style="max-width: 300px; flex-wrap: wrap">
-                                    {{--                                    //TicketContainer--}}
-                                </div>
+                                <button class="btn btn-outline-dark rounded fw-bold mt-3 w-100 ticketAdd">Добавить билет</button>
                             </form>
-                            <div class="mt-3">
-                                <button class="btn btn-outline-dark w-100" id="btnRemove">Удалить</button>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="total-bar admin-el-color rounded mt-5 p-3">
+                <div class="total-bar admin-el-color mt-5 p-3">
                     <h2 class="text-center">Заказ</h2>
                     <hr style="height: 4px; color: black;">
                     <div class="d-flex flex-row justify-content-between ">
@@ -93,7 +86,13 @@
                     <div class="d-flex justify-content-between flex-row">
                         <button id="bookButton" class="btn btn-outline-dark w-100 mx-1 rounded fw-bold">Забронировать
                         </button>
-                        <button class="btn btn-outline-dark rounded fw-bold ticketAdd">+</button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center admin-el-color flex-column align-items-center">
+                    <p class="fs-4 text-center">Выбер мест:</p>
+                    <div class="d-flex justify-content-evenly align-items-center flex-wrap" style="width: 300px;"
+                         id="placesContainer">
+                        {{--                                    //TicketContainer--}}
                     </div>
                 </div>
             </div>
@@ -167,25 +166,19 @@
                 let cb = document.querySelectorAll('.checkbox');
                 cb.forEach((item) => {
                     item.addEventListener('click', (e) => {
-                        if (e.target.checked) {
-                            if (cbArr.length > 0) {
-                                createTemplate();
-                            }
-                        }
-
+                        // if (e.target.checked) {
+                        //     if (cbArr.length > 0) {
+                        //         createTemplate();
+                        //     }
+                        // }
                         if (cbArr.includes(item.value)) {
                             let index = cbArr.indexOf(item.value)
                             cbArr.splice(index, 1);
                             // cbArr.includes(e.target.value) ? addPlaceTo(e.target.value) : deletePlace();
                         } else {
                             cbArr.push(item.value)
-                            addPlaceTo(cbArr);
+                            // addPlaceTo(cbArr);
                         }
-                        // if(cbArr.length > 1){
-
-                        console.log(cbArr);
-                        // }
-                        console.log(cbArr);
 
                     })
                 });
@@ -193,12 +186,10 @@
             })
 
         }
-
         drawPlaces(cruiseId.dataset.cruiseId)
 
-
         function createTemplate() {
-            const template = `<div class="d-flex justify-content-center align-items-center rounded flex-wrap mt-5">
+            const template = `<div class="d-flex justify-content-center align-items-center rounded flex-wrap ticketForm mt-5">
         <div class="bg-dark p-5" style="border-radius: 5px 0 0 5px;">
             <p class="fs-5 p-1 px-5 bg-light rounded fc-black" id="cruiseId" data-cruise-id="{{$cruise->id}}">Информация о рейсе:</p>
             <li class="fs-5 p-1 fc-white">Точка отправления: {{$cruise->route->departurePoint}}</li>
@@ -245,6 +236,13 @@
                                     <strong>{{ $message }}</strong>
                                     </span>
                 @enderror
+            <span class="fs-4">Введите серию и номер паспорта:</span>
+                            <input class="rounded border-color w-100" type="text" name="passport" id="passport">
+@error('passport')
+            <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
             <span class="fs-4">Введите вашу дату рождения:</span>
             <input class="rounded border-color w-100" type="date" name="date" id="date">
 @error('date')
@@ -253,6 +251,9 @@
                                     </span>
                 @enderror
             </form>
+                                         <div class="mt-3">
+                                            <button class="btn btn-outline-dark w-100" onclick="removeForm(this)" id="btnRemove">Удалить</button>
+                                        </div>
         </div>
     </div>`;
             let container = document.querySelector('.ticket-container');
@@ -277,28 +278,27 @@
             return age;
         }
 
-        // let btnRemove = document.querySelector('#btnRemove');
-        // console.log(btnRemove)
-        // btnRemove.addEventListener('click', (e) => {
-        //     e.preventDefault();
-        // });
+        function removeForm(target){
+           target.closest('.ticketForm').remove();
+        }
 
 
         function getFormData(array) {
             let dataArr = [];
 
-            let arr = [];
+            let placeArr = [];
             array.forEach((item, index) => {
                 const name = item.querySelector('[name="name"]'),
                     surname = item.querySelector('[name="surname"]'),
                     phone_number = item.querySelector('[name="phone_number"]'),
                     email = item.querySelector('[name="email"]'),
                     dateOfBirth = item.querySelector('[name="date"]'),
-                    passport = item.querySelector('[name="passport"]'),
+                    passport = item.querySelectorAll('[name="passport"]'),
                     placeContainer = item.querySelectorAll('.checkbox');
+                console.log(placeContainer)
                 placeContainer.forEach((item, index) => {
                     if (item.checked) {
-                        arr.push(index + 1)
+                        placeArr.push(index + 1)
                     }
                 })
                 const values = {
@@ -308,11 +308,12 @@
                     phone_number: phone_number.value,
                     passport: passport.value,
                     dateOfBirth: dateOfBirth.value.toLocaleString('en-US'),
-                    place: arr,
-                    cost: getAge(dateOfBirth.value) < 18 ? (cost * 0.7).toString() : cost,
+                    place: placeArr,
+                    cost: getAge(dateOfBirth.value) < 18 ? (cost * 0.9).toString() : cost,
                 }
                 dataArr.push(values);
             })
+            console.log(dataArr);
             return dataArr
         }
 
@@ -371,7 +372,6 @@
                             if(index === ticketIndex){
                                 //Баг с созданием билетов и указанием цены после
                                 let value = ticket.innerHTML;
-                                console.log('VALUE', value)
                                 ticket.innerHTML = value * 0.9
                             }
                         })

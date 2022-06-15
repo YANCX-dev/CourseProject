@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand fs-1 mb-1" href="{{ route('home') }}">QuickStation</a>
+        <a class="navbar-brand fs-1 mb-1" href="{{ route('home') }}"><img src="{{asset('storage/Logo.png')}}" style="width: 100px; height: auto;"  alt="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
