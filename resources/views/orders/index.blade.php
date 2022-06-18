@@ -68,7 +68,9 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                <button class="btn btn-outline-dark rounded fw-bold mt-3 w-100 ticketAdd">Добавить билет</button>
+                                <button class="btn btn-outline-dark rounded fw-bold mt-3 w-100 ticketAdd">Добавить
+                                    билет
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -109,80 +111,49 @@
         const cruiseId = document.querySelector('#cruiseId');
         let cost = document.querySelector('#ticketPrice').innerHTML.valueOf();
         let formCount = 1;
-
+        let cbArr = []; //Выбранные чб
         async function getFreeCruisePlaces(id) {
             let response = await fetch(`/cruise-places/${id}`);
             let data = await response.json();
-
             return data;
         }
 
-        function addPlaceTo(placesArr) {
-            let cruiseList = document.querySelector(".cruiseList");
-            const li = document.createElement('li');
-            li.classList.add("fs-5", "p-1", "fc-white");
-            placesArr.forEach((item) => {
-                li.innerHTML = `Место: ${item}`;
-                cruiseList.append(li);
-            })
+        async function drawPlaces(id) {
+            const placesContainer = document.querySelector("#placesContainer")
+            let places = Object.values(await getFreeCruisePlaces(id));
 
-
-        }
-
-        // function deletePlace(){
-        //     let addedPlace = document.querySelectorAll('.addedPlace');
-        //     let pickedPlace = document.querySelectorAll('.pickedPlace');
-        //     console.log(pickedPlace)
-        //     // console.log(addedPlace)
-        //     addedPlace.forEach((item)=>{
-        //         console.log(item.value)
-        //     })
-        // }
-
-        function drawPlaces(id) {
-            const placesContainer = document.querySelectorAll("#placesContainer")
-            let places = getFreeCruisePlaces(id);
-            places.then(function (value) {
-                //Рендер мест
-                let places = Object.values(value);
-                places.forEach((item) => {
-                    placesContainer.forEach((container) => {
-                        container.innerHTML += `
+            placesContainer.innerHTML = ''
+            places.forEach((item) => {
+                let itemCb = `
                                 <div class="checkbox__container">
                                          <label class="checkbox__label">
                                         <input type="checkbox" class="checkbox" name="place" value="${item}">
                                         <span class="fake fakeclass"></span>
                                         <p class="checkbox__text text-center">${item}</p>
                                         </label>
-                                </div>`
-
-                    })
-
-                })
-
-                let cbArr = []; //Выбранные чб
-                let spanFake = document.querySelectorAll('.fakeclass');
-                const cb = document.querySelectorAll(".checkbox")
-                cb.forEach((item) => {
-                    item.addEventListener('click', (e) => {
-                        if (cbArr.includes(item.value)) {
-                            let index = cbArr.indexOf(item.value)
-                            cbArr.splice(index, 1);
-                            console.log(cbArr)
-
-                        } else {
-                            cbArr.push(item.value)
-                            console.log(cbArr)
-                        }
-
-
-                    })
-                });
-
-
+                                </div>`;
+                placesContainer.insertAdjacentHTML('beforeend', itemCb);
             })
 
+            const cbs = document.querySelectorAll(".checkbox")
+
+            cbs.forEach((item) => {
+                item.addEventListener('click', (e) => {
+
+                    if (cbArr.includes(item.value)) {
+                        let index = cbArr.indexOf(item.value)
+                        cbArr.splice(index, 1);
+                        console.log(cbArr)
+                    } else {
+                        cbArr.push(item.value)
+                        console.log('push=',cbArr)
+                    }
+                    blockInput()
+                })
+            });
+
         }
+
         drawPlaces(cruiseId.dataset.cruiseId)
 
         function createTemplate() {
@@ -255,10 +226,9 @@
     </div>`;
             let container = document.querySelector('.ticket-container');
             container.insertAdjacentHTML("beforeend", template);
-
-            ticketPrice()
-            getTotalPrice()
-            checkboxControls()
+            getTotalPrice();
+            unblockInput();
+            ticketPrice();
         }
 
         function getAge(dateOfBirth) {
@@ -275,19 +245,51 @@
                 age = age - 1;
             }
 
+
             return age;
         }
 
-        function removeForm(target){
-           target.closest('.ticketForm').remove();
+        function removeForm(target) {
+            target.closest('.ticketForm').remove();
             getTotalPrice()
+            clearInput();
             formCount--;
+        }
+
+        function blockInput() {
+            let cb = document.querySelectorAll('.checkbox');
+            console.log(formCount, cbArr.length)
+            if (formCount === cbArr.length) {
+                cb.forEach((item) => {
+                    if (!item.checked) {
+                        item.setAttribute('disabled', 'disabled');
+                    }
+                })
+            } else {
+                unblockInput()
+            }
+        }
+
+        //Создаю форму - разблок чеки
+        function unblockInput() {
+            let cb = document.querySelectorAll('.checkbox');
+            cb.forEach((item) => {
+                item.removeAttribute('disabled');
+            })
+        }
+
+        //Удаляю - чищу
+        function clearInput() {
+            let cb = document.querySelectorAll('.checkbox');
+            cb.forEach((item) => {
+                item.checked = false;
+                item.removeAttribute('disabled');
+            })
         }
 
 
         function getFormData(array) {
             let dataArr = [];
-
             let placeArr = [];
             array.forEach((item, index) => {
                 const name = item.querySelector('[name="name"]'),
@@ -320,57 +322,15 @@
         }
 
 
-
-
-
         window.addEventListener('click', (e) => {
             if (e.target.classList.contains('ticketAdd')) {
                 e.preventDefault();
                 formCount++
                 console.log(formCount)
-                // let cb = document.querySelectorAll('.checkbox');
-                // let checkedCount = 0;
-                // cb.forEach((item) => {
-                //     item.addEventListener('click', (e) => {
-                //         item.checked ? checkedCount++ : checkedCount--
-                //     })
-                // })
                 createTemplate();
             }
-
         });
 
-        // window.addEventListener('click', (e) => {
-        //     if (e.target.classList.contains('fakeclass')) {
-        //         checkboxControls()
-        //     }
-        // });
-
-        // function checkboxControls(){
-        //     let cbArr = []; //Выбранные чб
-        //     console.log(cbArr)
-        //     const cb = document.querySelectorAll(".checkbox")
-        //     cb.forEach((item) => {
-        //         item.addEventListener('click', (e) => {
-        //             if (cbArr.includes(item.value)) {
-        //                 let index = cbArr.indexOf(item.value)
-        //                 cbArr.splice(index, 1);
-        //                 console.log(cbArr)
-        //
-        //             } else {
-        //                 cbArr.push(item.value)
-        //                 console.log(cbArr)
-        //             }
-        //             if(formCount === cbArr.length){
-        //                 cb.forEach((checkbox)=>{
-        //                     checkbox.setAttribute('disabled','disabled')
-        //                 })
-        //             }
-        //
-        //
-        //         })
-        //     });
-        // }
 
         bookButton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -385,44 +345,46 @@
             });
         });
 
-        // window.addEventListener('click', (e) => {
-        //     e.target.addEventListener('click', (e) => {
-        //
-        //     })
-        // });
 
-        function getTotalPrice(){
+        function getTotalPrice() {
             const ticketPrice = document.querySelectorAll('#ticketPrice');
             const totalField = document.querySelector('#totalPrice')
             let amount = 0;
-            ticketPrice.forEach((item)=>{
+            ticketPrice.forEach((item) => {
                 let price = parseInt(item.innerHTML);
                 amount += price;
             })
             totalField.innerHTML = amount;
         }
 
-        function ticketPrice(){
+        // window.addEventListener('click', (e) => {
+        //     if (e.target.classList.contains('.checkbox')) {
+        //         blockInput()
+        //         // unblockInput();
+        //         clearInput();
+        //     }
+        // })
+
+        function ticketPrice() {
             const dateInput = document.querySelectorAll('#date')
             const ticketPrice = document.querySelectorAll('#ticketPrice');
             const soloTicket = document.querySelector('#ticketPrice');
-            dateInput.forEach((item,index) => {
+            dateInput.forEach((item, index) => {
                 let cost = soloTicket.innerHTML;
                 console.log('COST', cost)
                 item.addEventListener('change', (e) => {
                     let age = getAge(e.target.value)
-                    if(age < 18){
-                        ticketPrice.forEach((ticket, ticketIndex)=>{
-                            if(index === ticketIndex){
+                    if (age < 18) {
+                        ticketPrice.forEach((ticket, ticketIndex) => {
+                            if (index === ticketIndex) {
                                 //Баг с созданием билетов и указанием цены после
                                 let value = ticket.innerHTML;
                                 ticket.innerHTML = value * 0.9
                             }
                         })
-                    }
-                    else{
-                        ticketPrice.forEach((ticket, ticketIndex)=>{
-                            if(index === ticketIndex){
+                    } else {
+                        ticketPrice.forEach((ticket, ticketIndex) => {
+                            if (index === ticketIndex) {
                                 ticket.innerHTML = cost
                             }
                         })
@@ -432,6 +394,7 @@
             })
 
         }
+
         ticketPrice()
     </script>
 
