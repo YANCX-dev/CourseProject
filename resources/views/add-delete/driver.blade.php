@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card text-white el-color mt-4">
+                <div class="card text-white admin-el-color mt-4">
                     <div class="card-header fs-5 fc-white">Добавление водителя</div>
                     <div class="card-body">
                         <form action="{{ route('addDriver') }}" method="POST">

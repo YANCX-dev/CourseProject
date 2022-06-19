@@ -35,9 +35,9 @@ class OrderController extends Controller
     }
 
 
-    public function store(OrderRequest $request, Cruise $cruise)
+    public function store(Request $request)
     {
-
+        dd($request);
         $user = User::where('email', $request->email)->where('phone_number', $request->phone_number)->first();
 
         if (!$user) {
@@ -51,7 +51,7 @@ class OrderController extends Controller
 
         $ticket = $user->tickets()->create([
             'place' => $request->place,
-            'cruise_id' => $cruise->id,
+            'cruise_id' => $request->cruise_id,
         ]);
 
         $departurePoint = $cruise->route->departurePoint;
@@ -74,6 +74,10 @@ class OrderController extends Controller
         }
         return back()->with(['message'=>'Ошибка оформления билета :( Попробуйте еще']);
 
+    }
+
+    public function create(Request $request){
+        dd($request);
     }
 
 

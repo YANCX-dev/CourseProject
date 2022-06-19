@@ -25,7 +25,11 @@ Route::get('/cruises/online', [CruisesController::class, 'onlineCruises'])->name
 Route::get('/cruises/all', [CruisesController::class, 'allcruises']);
 //Order Controller
 Route::get('/order/{cruise}', [OrderController::class, 'index'])->name('orderForm');
-Route::post('/order/store/{cruise}', [OrderController::class, 'store'])->name('orderStore');
+
+Route::post('/order/store', [OrderController::class, 'store'])->name('orderStore');
+
+
+Route::post('/order-create', [OrderController::class, 'create'])->name('createOrder');
 
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login'); // Auth\LoginController@showLoginForm
@@ -33,13 +37,9 @@ Route::post('login', [LoginController::class, 'login']); //'Auth\LoginController
 Route::get('logout', [LoginController::class, 'logout'])->name('logout'); // Auth\LoginController@logout
 
 Route::get('/passenger-info/{page}',[PageController::class,'show'])->name('showInfoPage');
-//Auth::routes();
-// Registration Routes...
-// Password Reset Routes...
-//Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
-//Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-//Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
-//Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+
+
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 //Используюмые в JS
@@ -58,8 +58,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/new-Mark', [MarkController::class, 'store'])->name('addMark');
     Route::post('/new-Driver', [DriverController::class, 'store'])->name('addDriver');
     Route::post('/new-Bus', [BusController::class, 'store'])->name('addBus');
-
-
 
     Route::get('/destination-control',[DestinationController::class,'index'])->name('destination.control');
     Route::get('/bus-control',[BusController::class,'index'])->name('bus.control');

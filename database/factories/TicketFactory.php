@@ -19,7 +19,8 @@ class TicketFactory extends Factory
         return [
             "place"=>rand(0,25),
             'cruise_id'=>rand(1,12),
-            "user_id"=>rand(1,20)
+            "user_id"=>rand(1,20),
+            'totalPrice'=>rand(225,250),
         ];
     }
 }

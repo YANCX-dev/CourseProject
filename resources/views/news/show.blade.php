@@ -17,9 +17,11 @@
                   <p class="fc-black fs-20px font-color text-center">{{$news->content}}</p>
               </div>
           </div>
-          <div class="mt-5 row" style="height: 400px;">
+          <div class="mt-5 row">
               <div class="col-lg-12">
-                  {{--              <img src="#" alt="#">--}}
+                 <div class="d-flex justify-content-center align-items-center">
+                     <img src="{{'/storage/news/'.$news->image}}" alt="image" style="width: 50%; height: 80%;">
+                 </div>
               </div>
           </div>
       </div>

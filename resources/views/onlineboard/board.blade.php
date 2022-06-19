@@ -5,7 +5,7 @@
     @include('inc.ticketbar')
     @if(count($cruises) > 0)
         <div class="container table-responsive">
-            <a class="btn btn-dark mt-5 px-5" href="{{ route('home') }}">Назад</a>
+            <a class="btn btn-dark mt-5 px-5" href="{{ route('home') }}" style="background-color: #333333;">Назад</a>
             <table class="table mt-5">
                 <thead>
                 <tr>
@@ -23,14 +23,14 @@
                     <th scope="col">
                         <div class="d-flex justify-content-between align-items-center">
                             <span>Время отправления</span>
-                            <button class="btn-dark" id="sortByArrTime">Sort &uarr;</button>
+                            <button class="btn-dark" style="background-color: #333333;" id="sortByArrTime">Sort &uarr;</button>
                         </div>
 
                     </th>
                     <th scope="col">
                         <div class="d-flex justify-content-between align-items-center">
                             <span>Точка прибытия</span>
-                            <button class="btn-dark" id="sortByDest">Sort &uarr;</button>
+                            <button class="btn-dark" style="background-color: #333333;" id="sortByDest">Sort &uarr;</button>
                         </div>
                     </th>
                     <th scope="col">
@@ -41,7 +41,7 @@
                     <th scope="col">
                         <div class="d-flex justify-content-between align-items-center">
                             <span>Время прибытия</span>
-                            <button class="btn-dark" id="sortByDepTime">Sort &uarr;</button>
+                            <button class="btn-dark" style="background-color: #333333;" id="sortByDepTime">Sort &uarr;</button>
                         </div>
 
                     </th>
@@ -64,7 +64,7 @@
                         <td>{{date('H:m', strtotime($cruise->arrivalTime))}}</td>
                         <td>{{$cruise->ticketPrice}}</td>
                         <td>
-                            <a href="{{ route('orderForm', $cruise)}}" class="btn btn-dark">Забронировать</a>
+                            <a href="{{ route('orderForm', $cruise)}}" class="btn btn-dark" style="background-color: #333333;">Забронировать</a>
                         </td>
                     </tr>
                 @endforeach
@@ -76,7 +76,6 @@
                     </div>
                 @endif
             </table>
-{{--            <a class="back_to_top" title="Наверх">↑ААААААААААААААААААААА</a>--}}
         </div>
 
 @endsection

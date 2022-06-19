@@ -6,11 +6,6 @@
                     <span class="d-none d-sm-inline" style="font-size: 30px;color: #333333">Меню</span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none side-bar-el d-sm-inline">Главная</span>
-                        </a>
-                    </li>
                     <li>
                         <a href="#submenu1" data-bs-toggle="collapse" class="text-decoration-none px-0 align-middle">
                             <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none fs-2 d-sm-inline">Панель управления </span> </a>

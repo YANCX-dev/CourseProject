@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
         Admin::factory(3)->create();
         $this->call(NewsSeeder::class);
         $this->call(InfoForPassengersSeeder::class);
+        $this->call(ElementSeeder::class);
 
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer("place");
             $table->foreignId("cruise_id")->constrained("cruises")->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete()->cascadeOnUpdate();
+            $table->decimal('totalPrice');
         });
     }
 

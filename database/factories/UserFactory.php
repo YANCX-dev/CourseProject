@@ -22,6 +22,7 @@ class UserFactory extends Factory
             'phone_number'=>$this->faker->phoneNumber(),
             'email'=>$this->faker->email(),
             'passport'=>$this->faker->postcode(),
+            'whereIssued'=>" "
         ];
     }
 }

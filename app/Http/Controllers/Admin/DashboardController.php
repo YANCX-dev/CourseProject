@@ -24,6 +24,7 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', compact('dest', 'tickets','users'));
     }
+
     public function userInfo(Request $request)
     {
         $user = User::find($request->user);
